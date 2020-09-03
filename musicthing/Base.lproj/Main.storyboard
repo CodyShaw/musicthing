@@ -709,7 +709,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="480" height="270"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <subviews>
-                            <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="g3f-Co-iJr">
+                            <button verticalHuggingPriority="750" fixedFrame="YES" springLoaded="YES" translatesAutoresizingMaskIntoConstraints="NO" id="g3f-Co-iJr">
                                 <rect key="frame" x="183" y="222" width="116" height="32"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <buttonCell key="cell" type="push" title="ChangeNote" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="heW-H4-fb6">
@@ -720,10 +720,23 @@
                                     <action selector="changeNoteClick:" target="XfG-lQ-9wD" id="Hee-Qh-yaX"/>
                                 </connections>
                             </button>
-                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="3ve-as-4j3">
-                                <rect key="frame" x="76" y="82" width="334" height="106"/>
+                            <textField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="BnI-zF-eMC">
+                                <rect key="frame" x="301" y="229" width="96" height="21"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                <textFieldCell key="cell" lineBreakMode="clipping" alignment="center" title="NoteText" placeholderString="C" id="Wmi-2x-BzS">
+                                <textFieldCell key="cell" lineBreakMode="truncatingTail" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" title="10" placeholderString="1" drawsBackground="YES" id="wdc-rI-96G">
+                                    <numberFormatter key="formatter" formatterBehavior="default10_4" numberStyle="decimal" formatWidth="-1" minimumIntegerDigits="1" maximumIntegerDigits="2000000000" maximumFractionDigits="3" id="8UN-53-kcZ"/>
+                                    <font key="font" metaFont="system"/>
+                                    <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                </textFieldCell>
+                                <connections>
+                                    <action selector="randomNoteTimeInputted:" target="XfG-lQ-9wD" id="F9A-Z6-7MS"/>
+                                </connections>
+                            </textField>
+                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="3ve-as-4j3">
+                                <rect key="frame" x="194" y="82" width="101" height="106"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                <textFieldCell key="cell" lineBreakMode="clipping" alignment="center" placeholderString="C" id="Wmi-2x-BzS">
                                     <font key="font" metaFont="system" size="90"/>
                                     <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                     <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
@@ -733,6 +746,7 @@
                     </view>
                     <connections>
                         <outlet property="NoteText" destination="3ve-as-4j3" id="igW-QA-tOv"/>
+                        <outlet property="randomNoteTimeInput" destination="BnI-zF-eMC" id="bih-TF-w3l"/>
                         <outlet property="randomizeNoteButton" destination="g3f-Co-iJr" id="RTX-sd-Ms3"/>
                     </connections>
                 </viewController>
