@@ -18,7 +18,8 @@ class ViewController: NSViewController {
     
     //Control Globals
     var runningRandomNote = false
-    var randomNoteTime = 0.0
+    var randomNoteTime = 1.0
+    var currentNote = 13;
     
     //Text Field Outlet
     @IBOutlet weak var NoteText: NSTextField!
@@ -28,11 +29,22 @@ class ViewController: NSViewController {
     //Randomize the displayed note, to be ran in a thread
     func randomizeNote(){
         //Run until cancelled
+        
         while(true){
             //Make Thread to update text field on GUI
-            DispatchQueue.main.asyncAfter(deadline: .now() + randomNoteTime){
-                self.changeNote(note: self.notesFlats[Int.random(in: 0..<12)])
+            var newNote = 0
+            
+            repeat{
+               newNote = Int.random(in: 0..<12)
+            } while (newNote == currentNote);
+            
+            currentNote = newNote
+            
+            DispatchQueue.main.async(){
+                self.changeNote(note: self.notesFlats[self.currentNote])
             }
+            sleep(UInt32(randomNoteTime))
+            if(displayRandomNote.isCancelled) { break; }
         }
     }
     
@@ -71,10 +83,16 @@ class ViewController: NSViewController {
         //Flip the current setting
         runningRandomNote = !runningRandomNote
         
+        if(displayRandomNote.isCancelled){
+            displayRandomNote = DispatchWorkItem(){
+                self.randomizeNote()
+            }
+        }
+        
         if(runningRandomNote){
             
             DispatchQueue.main.async {
-                self.randomizeNoteButton.stringValue = "Generating..."
+                self.randomizeNoteButton.title = "Generating..."
             }
             
             DispatchQueue.global().async(execute: displayRandomNote)
@@ -82,10 +100,10 @@ class ViewController: NSViewController {
         } else {
             
             DispatchQueue.main.async {
-                self.randomizeNoteButton.stringValue = "Start Notes"
+                self.randomizeNoteButton.title = "Start Notes"
             }
             
-            DispatchQueue.main.async {
+            DispatchQueue.global().async {
                 self.displayRandomNote.cancel()
             }
             
