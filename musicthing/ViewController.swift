@@ -20,6 +20,7 @@ class ViewController: NSViewController {
     var runningRandomNote = false
     var randomNoteTime = 10.0
     var currentNote = 13;
+    var currentScaleDisplay = 0; //0 = Flats, 1 = Sharps
     
     //Empty DispatchWorkItem to turn on and off when button is pressed
     var displayRandomNote = DispatchWorkItem(){}
@@ -31,6 +32,13 @@ class ViewController: NSViewController {
     @IBOutlet weak var randomizeNoteButton: NSButton!
     //Random Note Timer Input
     @IBOutlet weak var randomNoteTimeInput: NSTextField!
+    //Random Note Timer Display
+    @IBOutlet weak var randomNoteTimeDisplay: NSTextField!
+    //Scale Change Button
+    @IBOutlet weak var scaleChangeButton: NSButton!
+    //Scale Display
+    @IBOutlet weak var scaleDisplay: NSTextField!
+    
     
     //****************************************************************VIEW LOAD
     override func viewDidLoad() {
@@ -46,6 +54,17 @@ class ViewController: NSViewController {
         DispatchQueue.main.async {
             self.changeNote(note: self.notesFlats[0])
         }
+        
+        //Flats by default
+        DispatchQueue.main.async {
+            self.scaleDisplay.stringValue = "♭"
+        }
+        
+        //10 second countdown by default
+        DispatchQueue.main.async {
+            self.randomNoteTimeDisplay.stringValue = String(10)
+        }
+        
     }
 
     override var representedObject: Any? {
@@ -66,6 +85,9 @@ class ViewController: NSViewController {
             //Ensure a new note is chosen
             var newNote = 0
             
+            //Init Countdown Timer
+            var countdown = UInt32(randomNoteTime) + 1
+            
             repeat{
                newNote = Int.random(in: 0..<12)
             } while (newNote == currentNote);
@@ -74,11 +96,35 @@ class ViewController: NSViewController {
             
             //Change note
             DispatchQueue.main.async(){
-                self.changeNote(note: self.notesFlats[self.currentNote])
+                switch self.currentScaleDisplay {
+                case 0:
+                    self.changeNote(note: self.notesFlats[self.currentNote])
+                case 1:
+                    self.changeNote(note: self.notesSharps[self.currentNote])
+                default:
+                    self.changeNote(note: self.notesFlats[self.currentNote])
+                }
             }
             
             //Delay the timer amount
-            sleep(UInt32(randomNoteTime))
+            while(countdown > 0){
+                if(countdown <= 10){
+                    DispatchQueue.main.async(){
+                        self.randomNoteTimeDisplay.stringValue = String(countdown)
+                        let color = NSColor.init(red: 1, green: 0, blue: 0, alpha: 1)
+                        self.randomNoteTimeDisplay.textColor = color
+                    }
+                } else {
+                    DispatchQueue.main.async(){
+                        self.randomNoteTimeDisplay.stringValue = String(countdown)
+                        let color = NSColor.init(white: 1, alpha: 1)
+                        self.randomNoteTimeDisplay.textColor = color
+                    }
+                }
+                countdown = countdown - 1
+                sleep(1)
+                if(displayRandomNote.isCancelled) { break; }
+            }
             
             //Check if the thread was cancelled
             if(displayRandomNote.isCancelled) { break; }
@@ -97,7 +143,9 @@ class ViewController: NSViewController {
         }
         
         randomNoteTime = newTime
-        randomNoteTimeInput.stringValue = String(randomNoteTime)
+        DispatchQueue.main.async(){
+            self.randomNoteTimeInput.stringValue = String(self.randomNoteTime)
+        }
     }
     
     //Changes the Note in the GUI
@@ -127,6 +175,7 @@ class ViewController: NSViewController {
                 self.randomizeNoteButton.title = "Generating..."
                 self.lockNewTime()
                 self.randomNoteTimeInput.isEnabled = false
+                self.scaleChangeButton.isEnabled = false
             }
             
             //Start the thread
@@ -138,6 +187,7 @@ class ViewController: NSViewController {
             DispatchQueue.main.async {
                 self.randomizeNoteButton.title = "Start Notes"
                 self.randomNoteTimeInput.isEnabled = true
+                self.scaleChangeButton.isEnabled = true
             }
             
             //Cancel the thread
@@ -161,8 +211,30 @@ class ViewController: NSViewController {
             lockNewTime()
         }
     }
+    
+    //Scale Change Button function
+    @IBAction func scaleChangePressed(_ sender: Any) {
+        
+        currentScaleDisplay = currentScaleDisplay + 1
+        if( currentScaleDisplay > 1 ){
+            currentScaleDisplay = 0
+        }
+        
+        switch currentScaleDisplay {
+        case 0:
+            DispatchQueue.main.async {
+                self.scaleDisplay.stringValue = "♭"
+            }
+        case 1:
+            DispatchQueue.main.async {
+                self.scaleDisplay.stringValue = "♯"
+            }
+        default:
+            DispatchQueue.main.async {
+                self.scaleDisplay.stringValue = "♭"
+            }
+        }
+        
+        
+    }
 }
-
-
-
-
