@@ -684,11 +684,11 @@
         <scene sceneID="R2V-B0-nI4">
             <objects>
                 <windowController id="B8D-0N-5wS" sceneMemberID="viewController">
-                    <window key="window" title="Window" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" releasedWhenClosed="NO" visibleAtLaunch="NO" animationBehavior="default" id="IQv-IB-iLA">
-                        <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES"/>
+                    <window key="window" title="MusicThing" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" visibleAtLaunch="NO" animationBehavior="default" id="IQv-IB-iLA">
+                        <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES"/>
                         <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
                         <rect key="contentRect" x="196" y="240" width="480" height="270"/>
-                        <rect key="screenRect" x="0.0" y="0.0" width="1680" height="1027"/>
+                        <rect key="screenRect" x="0.0" y="0.0" width="2560" height="1417"/>
                         <connections>
                             <outlet property="delegate" destination="B8D-0N-5wS" id="98r-iN-zZc"/>
                         </connections>
@@ -743,7 +743,7 @@
                                 </textFieldCell>
                             </textField>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="X6u-sD-UAn">
-                                <rect key="frame" x="292" y="82" width="125" height="106"/>
+                                <rect key="frame" x="295" y="82" width="125" height="106"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" alignment="center" placeholderString="60" id="6mw-gc-e7z">
                                     <font key="font" metaFont="system" size="90"/>
@@ -766,11 +766,22 @@
                                 <rect key="frame" x="412" y="204" width="50" height="21"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" alignment="left" placeholderString="60" id="qAg-4j-h34">
-                                    <font key="font" metaFont="system" size="15"/>
+                                    <font key="font" metaFont="label" size="15"/>
                                     <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                     <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                 </textFieldCell>
                             </textField>
+                            <button verticalHuggingPriority="750" fixedFrame="YES" springLoaded="YES" translatesAutoresizingMaskIntoConstraints="NO" id="faG-Cw-X2Q">
+                                <rect key="frame" x="296" y="13" width="100" height="32"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                <buttonCell key="cell" type="push" title="Fretboard" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="EeT-TX-kS8">
+                                    <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                    <font key="font" metaFont="system"/>
+                                </buttonCell>
+                                <connections>
+                                    <action selector="fretboardButtonClicked:" target="XfG-lQ-9wD" id="YHZ-Gs-MpM"/>
+                                </connections>
+                            </button>
                         </subviews>
                     </view>
                     <connections>
@@ -784,7 +795,57 @@
                 </viewController>
                 <customObject id="rPt-NT-nkU" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="75" y="655"/>
+            <point key="canvasLocation" x="75" y="740"/>
+        </scene>
+        <!--FretboardController-->
+        <scene sceneID="DO7-LD-xEH">
+            <objects>
+                <windowController storyboardIdentifier="FretboardController" id="67A-E5-atZ" userLabel="FretboardController" sceneMemberID="viewController">
+                    <window key="window" identifier="FretboardWindow" title="FretboardController" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" releasedWhenClosed="NO" visibleAtLaunch="NO" frameAutosaveName="" animationBehavior="default" id="l2a-VL-Azh">
+                        <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES"/>
+                        <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
+                        <rect key="contentRect" x="425" y="461" width="480" height="270"/>
+                        <rect key="screenRect" x="0.0" y="0.0" width="2560" height="1417"/>
+                        <connections>
+                            <outlet property="delegate" destination="67A-E5-atZ" id="wEh-bp-ATb"/>
+                        </connections>
+                    </window>
+                    <connections>
+                        <segue destination="6me-m8-BwM" kind="relationship" relationship="window.shadowedContentViewController" id="Nvz-om-8ZA"/>
+                    </connections>
+                </windowController>
+                <customObject id="upB-L6-wxa" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
+                <userDefaultsController representsSharedInstance="YES" id="HSG-Ke-AWW"/>
+            </objects>
+            <point key="canvasLocation" x="611" y="250"/>
+        </scene>
+        <!--Fretboard Controller-->
+        <scene sceneID="uvV-5H-U12">
+            <objects>
+                <viewController id="6me-m8-BwM" customClass="FretboardController" customModule="musicthing" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" id="4TT-KN-FJe">
+                        <rect key="frame" x="0.0" y="0.0" width="480" height="270"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <subviews>
+                            <customView identifier="FretboardView" translatesAutoresizingMaskIntoConstraints="NO" id="One-xU-peJ" customClass="FretboardView" customModule="musicthing" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="0.0" width="480" height="270"/>
+                                <accessibility identifier="FretboardView"/>
+                            </customView>
+                        </subviews>
+                        <constraints>
+                            <constraint firstAttribute="bottom" secondItem="One-xU-peJ" secondAttribute="bottom" id="9ka-hb-J3p"/>
+                            <constraint firstAttribute="trailing" secondItem="One-xU-peJ" secondAttribute="trailing" id="ELJ-Ff-Z7N"/>
+                            <constraint firstItem="One-xU-peJ" firstAttribute="top" secondItem="4TT-KN-FJe" secondAttribute="top" id="WeG-te-gUj"/>
+                            <constraint firstItem="One-xU-peJ" firstAttribute="leading" secondItem="4TT-KN-FJe" secondAttribute="leading" id="xB8-mH-VmX"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="FretboardView" destination="One-xU-peJ" id="nFg-0u-hzi"/>
+                    </connections>
+                </viewController>
+                <customObject id="xFB-oi-EbW" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="611" y="740"/>
         </scene>
     </scenes>
 </document>

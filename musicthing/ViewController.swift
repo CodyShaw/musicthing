@@ -14,7 +14,7 @@ class ViewController: NSViewController {
     let notesFlats = ["C", "D♭", "D", "E♭", "E", "F", "G♭", "G", "A♭", "A", "B♭", "B"]
 
     //Array of Sharps
-    let notesSharps = ["C", "C♯", "D", "D♯", "E", "F", "F♯", "G", "G♯", "A", "B♯", "B"]
+    let notesSharps = ["C", "C♯", "D", "D♯", "E", "F", "F♯", "G", "G♯", "A", "A♯", "B"]
     
     //Control Globals
     var runningRandomNote = false
@@ -38,7 +38,8 @@ class ViewController: NSViewController {
     @IBOutlet weak var scaleChangeButton: NSButton!
     //Scale Display
     @IBOutlet weak var scaleDisplay: NSTextField!
-    
+    //Fretboard Controller
+    let fretboardController:NSWindowController = (NSStoryboard(name: "Main", bundle: nil).instantiateController(withIdentifier: "FretboardController") as? NSWindowController)!
     
     //****************************************************************VIEW LOAD
     override func viewDidLoad() {
@@ -234,7 +235,16 @@ class ViewController: NSViewController {
                 self.scaleDisplay.stringValue = "♭"
             }
         }
-        
-        
+    }
+    
+    @IBAction func fretboardButtonClicked(_ sender: Any) {
+        DispatchQueue.main.async {
+            
+            if(self.fretboardController.window!.isVisible){
+                self.fretboardController.close()
+            } else {
+                self.fretboardController.showWindow(self)
+            }
+        }
     }
 }
